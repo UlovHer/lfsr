@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 /**
  * Initialise un générateur pseudo-aléatoire.
@@ -85,27 +86,43 @@ char clock_lfsr(char *registers, char *coefficients, int length) {
 	return last;
 }
 
-void berlekamp_massey(char *random, unsigned int length) {
+void berlekamp_massey(char *random, unsigned int length, char *result) {
 	unsigned int L = 0;
 	int m;
 	char *f = malloc(sizeof(char) * L);
 	char *g = malloc(0);
 
-	for (int n = 0; i < length; n++) {
+	for (int n = 0; n < length; n++) {
 		char sum;
-		for (int l i = 0; l < L; l++) {
+		for (int l = 0; l < L; l++) {
 			sum = sum ^ f[l] ^ random[n - l];
 		}
 		char d = random[n] ^ sum; 
 
-		if (d = 1) {
+		if (d == 1) {
+			char *t = malloc(sizeof(f));
+			strncpy(t, f, sizeof(f));
+
+
+
 			if (2 * L <= n) {
 				L = n + 1 - L;
 				m = n;
 				g = t;
+				free(g);
+				g = malloc(sizeof(t));
+				strncpy(g, t, sizeof(t));
 			}
+			
+			free(t);
 		}
 	}
+
+	result = malloc(sizeof(char) * L);
+	strncpy(result, f, sizeof());
+
+	free(f);
+	free(g);
 }
 
 int main(int argc, char **argv) {
